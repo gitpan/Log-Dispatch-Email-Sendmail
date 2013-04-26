@@ -7,15 +7,15 @@ use base 'Log::Dispatch::Email';
 
 =head1 NAME
 
-Log::Dispatch::Email::Sendmail - Subclass of Log::Dispatch::Email that sends e-mail using sendmail
+Log::Dispatch::Email::Sendmail - Subclass of Log::Dispatch::Email that sends e-mail using Sendmail
 
 =head1 VERSION
 
-Version 0.01
+Version 0.02
 
 =cut
 
-our $VERSION = '0.01';
+our $VERSION = '0.02';
 
 =head1 SYNOPSIS
 
@@ -23,7 +23,7 @@ L<Log::Dispatch::Email::MailSendmail> is no longer suitable for all
 situations because it doesn't use Sendmail to send mail (despite the
 name of the module) instead it uses SMTP and doesn't support AUTH.
 
-This module sends mail using sendmail. It has the overhead of a
+This module sends mail using Sendmail. It has the overhead of a
 fork/exec so it should only be used where really needed.
 
     use Log::Dispatch;
@@ -54,6 +54,12 @@ sub send_email {
 	my %p = @_;
 
 	my $to = join(' ', @{$self->{to}});
+
+	unless($to) {
+		warn 'To whom should I be sending this e-mail?';
+		return;
+	}
+
 	my $subject = $self->{subject};
 	my $message = $p{message};
 

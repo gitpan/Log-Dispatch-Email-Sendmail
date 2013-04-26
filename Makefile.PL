@@ -2,6 +2,12 @@ use strict;
 use warnings;
 use ExtUtils::MakeMaker;
 
+unless((-f '/usr/sbin/sendmail' && -x '/usr/sbin/sendmail')) {
+	# This will set the CPAN-Testers status to Unknown
+	# TODO: Work out how to set the status to NA
+	die '/usr/sbin/sendmail is not installed';
+}
+
 WriteMakefile(
     NAME                => 'Log::Dispatch::Email::Sendmail',
     AUTHOR              => q{Nigel Horne <njh@bandsman.co.uk>},
